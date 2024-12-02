@@ -1000,7 +1000,6 @@ class DocumentSerializer(
 
     class Meta:
         model = Document
-        depth = 1
         fields = (
             "id",
             "correspondent",
