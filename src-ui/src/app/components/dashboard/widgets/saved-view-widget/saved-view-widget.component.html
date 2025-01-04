@@ -92,33 +92,105 @@
   } @else if (displayMode === DisplayMode.SMALL_CARDS) {
     <div class="row row-cols-paperless-cards my-n2">
       @for (d of documents; track d.id; let i = $index) {
-        <pngx-document-card-small
-          class="p-0"
-          [ngStyle]="{ opacity: !loading && show ? 1 : 1 - (i * 1/documents.length) }"
-          (dblClickDocument)="openDocumentDetail(d)"
-          [document]="!loading && show ? d : null"
-          [displayFields]="displayFields"
-          (clickTag)="clickTag($event)"
-          (clickCorrespondent)="clickCorrespondent($event)"
-          (clickStoragePath)="clickStoragePath($event)"
-          (clickDocumentType)="clickDocumentType($event)">
-        </pngx-document-card-small>
+        @defer {
+          <pngx-document-card-small
+            class="p-0"
+            [ngStyle]="{ opacity: !loading && show ? 1 : 1 - (i * 1/documents.length) }"
+            (dblClickDocument)="openDocumentDetail(d)"
+            [document]="!loading && show ? d : null"
+            [displayFields]="displayFields"
+            (clickTag)="clickTag($event)"
+            (clickCorrespondent)="clickCorrespondent($event)"
+            (clickStoragePath)="clickStoragePath($event)"
+            (clickDocumentType)="clickDocumentType($event)">
+          </pngx-document-card-small>
+        } @placeholder (minimum 500ms) {
+          <div class="col p-2 h-100">
+            <div class="card placeholder-glow document-card">
+              <div class="border-bottom doc-img-container rounded-top">
+                <div class="card-img doc-img">
+                  <div class="placeholder bg-secondary w-100 card-img doc-img"></div>
+                </div>
+              </div>
+
+              <div class="card-body bg-light p-2">
+                <div class="placeholder bg-secondary w-100"></div>
+                <div class="placeholder bg-secondary w-50"></div>
+              </div>
+
+              <div class="card-footer pt-0 pb-2 px-2">
+                <div class="list-group list-group-flush border-0 pt-1 pb-2 card-info">
+                  <div class="placeholder bg-secondary w-100"></div>
+                </div>
+                <div class="d-flex justify-content-between align-items-center">
+                  <div class="btn-group w-100">
+                    <button class="btn btn-sm btn-outline-secondary placeholder bg-secondary"></button>
+                    <button class="btn btn-sm btn-outline-secondary placeholder bg-secondary"></button>
+                    <button class="btn btn-sm btn-outline-secondary placeholder bg-secondary"></button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        }
       }
     </div>
   } @else if (displayMode === DisplayMode.LARGE_CARDS) {
     <div class="row my-n2">
       @for (d of documents; track d.id; let i = $index) {
-        <pngx-document-card-large
-          (dblClickDocument)="openDocumentDetail(d)"
-          [document]="!loading && show ? d : null"
-          [ngStyle]="{ opacity: !loading && show ? 1 : 1 - (i * 1/documents.length) }"
-          [displayFields]="displayFields"
-          (clickTag)="clickTag($event)"
-          (clickCorrespondent)="clickCorrespondent($event)"
-          (clickStoragePath)="clickStoragePath($event)"
-          (clickDocumentType)="clickDocumentType($event)"
-          (clickMoreLike)="clickMoreLike(d.id)">
-        </pngx-document-card-large>
+        @defer {
+          <pngx-document-card-large
+            (dblClickDocument)="openDocumentDetail(d)"
+            [document]="!loading && show ? d : null"
+            [ngStyle]="{ opacity: !loading && show ? 1 : 1 - (i * 1/documents.length) }"
+            [displayFields]="displayFields"
+            (clickTag)="clickTag($event)"
+            (clickCorrespondent)="clickCorrespondent($event)"
+            (clickStoragePath)="clickStoragePath($event)"
+            (clickDocumentType)="clickDocumentType($event)"
+            (clickMoreLike)="clickMoreLike(d.id)">
+          </pngx-document-card-large>
+        }
+        @placeholder (minimum 500ms) {
+          <div class="card document-card-large mb-3 shadow-sm bg-light placeholder-glow">
+            <div class="row g-0">
+              <div class="col-md-2 doc-img-container rounded-start">
+                <div class="placeholder bg-secondary w-100 card-img doc-img border-end rounded-start"></div>
+              </div>
+              <div class="col">
+                <div class="card-body">
+
+                  <div class="d-flex justify-content-between align-items-center">
+                    <h5 class="card-title w-100">
+                      <div class="placeholder bg-secondary w-75 mb-3">&nbsp;</div>
+                    </h5>
+                  </div>
+
+                  <div class="placeholder bg-secondary w-100 d-block mb-2"></div>
+                  <div class="placeholder bg-secondary w-75 d-block mb-2"></div>
+                  <div class="placeholder bg-secondary w-25 d-block"></div>
+
+                  <div class="d-flex flex-column flex-md-row align-items-md-center">
+                    <div class="btn-group">
+                      <div class="placeholder btn btn-sm btn-outline-secondary bg-secondary" style="width: 60px;">&nbsp;</div>
+                      <div class="placeholder btn btn-sm btn-outline-secondary bg-secondary" style="width: 60px;">&nbsp;</div>
+                      <div class="placeholder btn btn-sm btn-outline-secondary bg-secondary" style="width: 60px;">&nbsp;</div>
+                      <div class="placeholder btn btn-sm btn-outline-secondary bg-secondary" style="width: 60px;">&nbsp;</div>
+                    </div>
+
+                    <div class="list-group list-group-horizontal border-0 card-info ms-md-auto mt-2 mt-md-0">
+                      <div class="placeholder list-group-item bg-secondary w-25">&nbsp;</div>
+                      <div class="placeholder list-group-item bg-secondary w-25">&nbsp;</div>
+                      <div class="placeholder list-group-item bg-secondary w-25">&nbsp;</div>
+                      <div class="placeholder list-group-item bg-secondary w-25">&nbsp;</div>
+                      <div class="placeholder list-group-item bg-secondary w-25">&nbsp;</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        }
       }
     </div>
   } @else {
