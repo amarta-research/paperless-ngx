@@ -8,37 +8,53 @@ a certain number of times, waiting a little bit in between
 import os
 import sys
 import time
-from typing import Final
 
+import click
 from redis import Redis
 
-if __name__ == "__main__":
-    MAX_RETRY_COUNT: Final[int] = 5
-    RETRY_SLEEP_SECONDS: Final[int] = 5
 
-    REDIS_URL: Final[str] = os.getenv("PAPERLESS_REDIS", "redis://localhost:6379")
-
-    print("Waiting for Redis...", flush=True)
+@click.command(context_settings={"show_default": True})
+@click.option(
+    "--retry-count",
+    default=5,
+    help="Count of times to retry the Redis connection",
+)
+@click.option(
+    "--retry-sleep",
+    default=5,
+    help="Seconds to wait between Redis connection retries",
+)
+@click.argument(
+    "redis_url",
+    default=lambda: os.getenv("PAPERLESS_REDIS", "redis://localhost:6379"),
+)
+def wait(redis_url: str, retry_count: int, retry_sleep: int) -> None:
+    click.echo("Waiting for Redis...")
 
     attempt = 0
-    with Redis.from_url(url=REDIS_URL) as client:
-        while attempt < MAX_RETRY_COUNT:
+    with Redis.from_url(url=redis_url) as client:
+        while attempt < retry_count:
             try:
                 client.ping()
                 break
             except Exception as e:
-                print(
+                click.echo(
                     f"Redis ping #{attempt} failed.\n"
                     f"Error: {e!s}.\n"
-                    f"Waiting {RETRY_SLEEP_SECONDS}s",
-                    flush=True,
+                    f"Waiting {retry_sleep}s",
                 )
-                time.sleep(RETRY_SLEEP_SECONDS)
+                time.sleep(retry_sleep)
                 attempt += 1
 
-    if attempt >= MAX_RETRY_COUNT:
-        print("Failed to connect to redis using environment variable PAPERLESS_REDIS.")
+    if attempt >= retry_count:
+        click.echo(
+            "Failed to connect to redis using environment variable PAPERLESS_REDIS.",
+        )
         sys.exit(os.EX_UNAVAILABLE)
     else:
-        print("Connected to Redis broker.")
+        click.echo("Connected to Redis broker.")
         sys.exit(os.EX_OK)
+
+
+if __name__ == "__main__":
+    wait()
