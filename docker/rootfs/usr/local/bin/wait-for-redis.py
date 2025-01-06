@@ -17,16 +17,20 @@ from redis import Redis
 @click.option(
     "--retry-count",
     default=5,
+    type=int,
     help="Count of times to retry the Redis connection",
 )
 @click.option(
     "--retry-sleep",
     default=5,
+    type=int,
     help="Seconds to wait between Redis connection retries",
 )
 @click.argument(
     "redis_url",
-    default=lambda: os.getenv("PAPERLESS_REDIS", "redis://localhost:6379"),
+    type=str,
+    envvar="PAPERLESS_REDIS",
+    default="redis://localhost:6379",
 )
 def wait(redis_url: str, retry_count: int, retry_sleep: int) -> None:
     click.echo("Waiting for Redis...")
