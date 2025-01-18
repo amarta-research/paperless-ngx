@@ -20,6 +20,7 @@ import {
 import { dirtyCheck, DirtyComponent } from '@ngneat/dirty-check-forms'
 import { PDFDocumentProxy, PdfViewerModule } from 'ng2-pdf-viewer'
 import { NgxBootstrapIconsModule } from 'ngx-bootstrap-icons'
+import { DeviceDetectorService } from 'ngx-device-detector'
 import { BehaviorSubject, Observable, Subject } from 'rxjs'
 import {
   debounceTime,
@@ -194,8 +195,6 @@ export class DocumentDetailComponent
   previewUrl: string
   thumbUrl: string
   previewText: string
-  downloadUrl: string
-  downloadOriginalUrl: string
   previewLoaded: boolean = false
   tiffURL: string
   tiffError: string
@@ -233,6 +232,9 @@ export class DocumentDetailComponent
   ogDate: Date
 
   customFields: CustomField[]
+
+  public downloading: boolean = false
+
   public readonly CustomFieldDataType = CustomFieldDataType
 
   public readonly ContentRenderType = ContentRenderType
@@ -272,7 +274,8 @@ export class DocumentDetailComponent
     private userService: UserService,
     private customFieldsService: CustomFieldsService,
     private http: HttpClient,
-    private hotKeyService: HotKeyService
+    private hotKeyService: HotKeyService,
+    private deviceDetectorService: DeviceDetectorService
   ) {
     super()
   }
@@ -415,13 +418,6 @@ export class DocumentDetailComponent
       .pipe(
         switchMap((doc) => {
           this.documentId = doc.id
-          this.downloadUrl = this.documentsService.getDownloadUrl(
-            this.documentId
-          )
-          this.downloadOriginalUrl = this.documentsService.getDownloadUrl(
-            this.documentId,
-            true
-          )
           this.suggestions = null
           const openDocument = this.openDocumentService.getOpenDocument(
             this.documentId
@@ -967,6 +963,52 @@ export class DocumentDetailComponent
             )
           },
         })
+    })
+  }
+
+  download(original: boolean = false) {
+    this.downloading = true
+    const downloadUrl = this.documentsService.getDownloadUrl(
+      this.documentId,
+      original
+    )
+    this.http.get(downloadUrl, { responseType: 'blob' }).subscribe({
+      next: (blob) => {
+        this.downloading = false
+        const blobParts = [blob]
+        const file = new File(
+          blobParts,
+          original
+            ? this.document.original_file_name
+            : this.document.archived_file_name,
+          {
+            type: original ? this.document.mime_type : 'application/pdf',
+          }
+        )
+        if (
+          this.deviceDetectorService.isMobile() &&
+          navigator.canShare &&
+          navigator.canShare({ files: [file] })
+        ) {
+          navigator.share({
+            files: [file],
+          })
+        } else {
+          const url = URL.createObjectURL(blob)
+          const a = document.createElement('a')
+          a.href = url
+          a.download = this.document.title
+          a.click()
+          URL.revokeObjectURL(url)
+        }
+      },
+      error: (error) => {
+        this.downloading = false
+        this.toastService.showError(
+          $localize`Error downloading document`,
+          error
+        )
+      },
     })
   }
 
