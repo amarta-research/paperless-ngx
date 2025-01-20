@@ -27,7 +27,9 @@ from django.db.models import Count
 from django.db.models import IntegerField
 from django.db.models import Max
 from django.db.models import Model
+from django.db.models import OuterRef
 from django.db.models import Q
+from django.db.models import Subquery
 from django.db.models import Sum
 from django.db.models import When
 from django.db.models.functions import Length
@@ -343,8 +345,23 @@ class DocumentViewSet(
     GenericViewSet,
 ):
     model = Document
-    queryset = Document.objects.annotate(num_notes=Count("notes"))
     serializer_class = DocumentSerializer
+    queryset = (
+        Document.objects.order_by("-created")
+        .annotate(
+            num_notes=Subquery(
+                Note.objects.filter(document=OuterRef("pk"))
+                .values("document")
+                .annotate(
+                    num_notes=Count("document"),
+                )
+                .values("num_notes"),
+            ),
+        )
+        .select_related("correspondent", "storage_path", "document_type", "owner")
+        .prefetch_related("tags", "custom_fields", "notes")
+        .distinct()
+    )
     pagination_class = StandardPagination
     permission_classes = (IsAuthenticated, PaperlessObjectPermissions)
     filter_backends = (
@@ -369,15 +386,6 @@ class DocumentViewSet(
         "page_count",
         "custom_field_",
     )
-
-    def get_queryset(self):
-        return (
-            Document.objects.distinct()
-            .order_by("-created")
-            .annotate(num_notes=Count("notes"))
-            .select_related("correspondent", "storage_path", "document_type", "owner")
-            .prefetch_related("tags", "custom_fields", "notes")
-        )
 
     def get_serializer(self, *args, **kwargs):
         fields_param = self.request.query_params.get("fields", None)
