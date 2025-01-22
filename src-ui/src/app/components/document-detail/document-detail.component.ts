@@ -849,7 +849,8 @@ export class DocumentDetailComponent
       .pipe(
         switchMap(({ nextDocId, updateResult }) => {
           if (nextDocId && updateResult) {
-            // this.openDocumentService.setDirty(this.document, false)
+            console.log('force set dirty false')
+            this.openDocumentService.setDirty(this.document, false)
             console.log('closing document')
 
             return this.openDocumentService
