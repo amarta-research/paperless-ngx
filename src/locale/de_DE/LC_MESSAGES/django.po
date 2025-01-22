@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: paperless-ngx\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-12-02 23:04-0800\n"
-"PO-Revision-Date: 2025-01-16 04:39\n"
+"PO-Revision-Date: 2025-01-22 12:11\n"
 "Last-Translator: \n"
 "Language-Team: German\n"
 "Language: de_DE\n"
@@ -878,7 +878,7 @@ msgstr "E-Mail-Betreff"
 
 #: documents/models.py:1169
 msgid "The subject of the email, can include some placeholders, see documentation."
-msgstr "Der Betreff der E-Mail kann Platzhalter behinhalten, siehe Dokumentation."
+msgstr "Der Betreff der E-Mail kann Platzhalter beinhalten, siehe Dokumentation."
 
 #: documents/models.py:1175
 msgid "email body"

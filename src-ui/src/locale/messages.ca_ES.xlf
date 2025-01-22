@@ -1116,7 +1116,7 @@
           <context context-type="sourcefile">src/app/components/admin/settings/settings.component.html</context>
           <context context-type="linenumber">186,188</context>
         </context-group>
-        <target state="translated"> Update checking works by pinging the public GitHub API for the latest release to determine whether a new version is available. Actual updating of the app must still be performed manually. </target>
+        <target state="translated"> La comprovació d'actualitzacions funciona fent ping a l'API pública de GitHub i obtenir la darrera versió per determinar si hi ha una versió nova disponible. L'actualització real de l'aplicació encara s'ha de fer manualment. </target>
       </trans-unit>
       <trans-unit id="8416061320800650487" datatype="html">
         <source>No tracking data is collected by the app in any way.</source>
