@@ -81,6 +81,8 @@ export class OpenDocumentsService {
   }
 
   setDirty(doc: Document, dirty: boolean) {
+    console.log('setDirty', doc.id, dirty)
+
     if (!this.openDocuments.find((d) => d.id == doc.id)) return
     if (dirty) this.dirtyDocuments.add(doc.id)
     else this.dirtyDocuments.delete(doc.id)
