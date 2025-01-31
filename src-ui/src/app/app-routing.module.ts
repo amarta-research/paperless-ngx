@@ -29,6 +29,7 @@ import {
   PermissionType,
 } from './services/permissions.service'
 import { DocumentComposeComponent } from './components/document-compose/document-compose.component'
+import { DocumentChatComponent } from './components/document-chat/document-chat.component'
 
 export const routes: Routes = [
   { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
@@ -39,6 +40,7 @@ export const routes: Routes = [
     children: [
       { path: 'dashboard', component: DashboardComponent },
       { path: 'compose', component: DocumentComposeComponent },
+      { path: 'document-chat', component: DocumentChatComponent },
       {
         path: 'documents',
         component: DocumentListComponent,
