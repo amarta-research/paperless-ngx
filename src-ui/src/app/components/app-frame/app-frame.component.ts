@@ -68,11 +68,18 @@ import { GlobalSearchComponent } from './global-search/global-search.component'
     TourNgBootstrapModule,
   ],
 })
-export class AppFrameComponent
-  extends ComponentWithPermissions
-  implements OnInit, ComponentCanDeactivate
-{
-  versionString = `${environment.appTitle} ${environment.version}`
+export class AppFrameComponent extends ComponentWithPermissions implements OnInit, ComponentCanDeactivate {
+  private expandedMenus: { [key: string]: boolean } = {};
+
+  isMenuExpanded(menuId: string): boolean {
+    return this.expandedMenus[menuId] || false;
+  }
+
+  toggleMenu(menuId: string): void {
+    this.expandedMenus[menuId] = !this.expandedMenus[menuId];
+  }
+
+  versionString = `${environment.appTitle} ${environment.version}`;
   appRemoteVersion: AppRemoteVersion
 
   isMenuCollapsed: boolean = true
