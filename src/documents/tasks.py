@@ -436,3 +436,29 @@ def check_scheduled_workflows():
                             WorkflowTrigger.WorkflowTriggerType.SCHEDULED,
                             document,
                         )
+
+
+@shared_task
+def check_document_sla_status():
+    """
+    Check and update SLA status for documents with processing deadlines.
+    """
+    now = timezone.now()
+    documents = Document.objects.filter(
+        sla_processing_deadline__isnull=False,
+        sla_status__in=['on_track', 'approaching_deadline', None]
+    )
+
+    for document in documents:
+        days_left = (document.sla_processing_deadline - now).days
+
+        if days_left < 0:
+            document.sla_status = 'overdue'
+        elif days_left <= 3:  # Configurable threshold for approaching deadline
+            document.sla_status = 'approaching_deadline'
+        else:
+            document.sla_status = 'on_track'
+
+        document.save(update_fields=['sla_status'])
+
+    return f"Updated SLA status for {documents.count()} documents"

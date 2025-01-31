@@ -534,7 +534,7 @@ CSRF_TRUSTED_ORIGINS = __get_list("PAPERLESS_CSRF_TRUSTED_ORIGINS")
 # We allow CORS from localhost:8000
 CORS_ALLOWED_ORIGINS = __get_list(
     "PAPERLESS_CORS_ALLOWED_HOSTS",
-    ["http://localhost:8000"],
+    ["http://localhost:8000", "http://localhost:4200"],
 )
 
 if DEBUG:

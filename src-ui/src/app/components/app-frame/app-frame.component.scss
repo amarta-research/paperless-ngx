@@ -294,3 +294,36 @@ main {
 ::ng-deep .navItemDrag .position-absolute i-bs {
   display: none;
 }
+
+.submenu {
+  padding-left: 1.5rem;
+  margin-bottom: 0.5rem;
+  
+  .nav-link {
+    padding: 0.4rem 1rem;
+    font-weight: normal;
+    
+    &:hover, &.active {
+      color: var(--bs-primary);
+    }
+  }
+}
+
+.nav-item {
+  &.expanded .submenu {
+    display: block;
+  }
+  
+  .submenu {
+    display: none;
+    padding-left: 1rem;
+  }
+
+  .nav-item.expanded .submenu {
+    display: block;
+  }
+}
+
+.sidebar.slim .submenu {
+  display: none;
+}

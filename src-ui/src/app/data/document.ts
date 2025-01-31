@@ -174,4 +174,10 @@ export interface Document extends ObjectWithPermissions {
   remove_inbox_tags?: boolean
 
   page_count?: number
+
+  // SLA-related fields
+  sla_processing_deadline?: Date
+  sla_responsible_user?: number
+  sla_status?: 'on_track' | 'approaching_deadline' | 'overdue'
+  sla_processing_days?: number
 }

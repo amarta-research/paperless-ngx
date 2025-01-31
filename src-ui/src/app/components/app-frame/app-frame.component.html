@@ -17,7 +17,7 @@
       @if (customAppTitle?.length) {
         <div class="d-flex flex-column align-items-start">
           <span class="title">{{customAppTitle}}</span>
-          <span class="byline text-uppercase font-monospace" i18n>by Paperless-ngx</span>
+          <span class="byline text-uppercase font-monospace" i18n>by Amarta Research</span>
         </div>
       } @else {
         Paperless-ngx
@@ -88,6 +88,89 @@
               ngbPopover="Documents" i18n-ngbPopover [disablePopover]="!slimSidebarEnabled" placement="end"
               container="body" triggers="mouseenter:mouseleave" popoverClass="popover-slim">
               <i-bs class="me-1" name="files"></i-bs><span>&nbsp;<ng-container i18n>Documents</ng-container></span>
+            </a>
+          </li>
+          <li class="nav-item app-link" [class.expanded]="isMenuExpanded('disposisi')">
+            <a class="nav-link" (click)="toggleMenu('disposisi')"
+              ngbPopover="Disposition" i18n-ngbPopover [disablePopover]="!slimSidebarEnabled" placement="end"
+              container="body" triggers="mouseenter:mouseleave" popoverClass="popover-slim">
+              <i-bs class="me-1" name="file-text"></i-bs><span>&nbsp;<ng-container i18n>Disposition</ng-container></span>
+            </a>
+            <ul class="nav flex-column submenu">
+              <li class="nav-item">
+                <a class="nav-link" routerLink="disposisi/in" routerLinkActive="active" (click)="closeMenu()">
+                  <span>&nbsp;<ng-container i18n>Incoming Disposition</ng-container></span>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" routerLink="disposisi/out" routerLinkActive="active" (click)="closeMenu()">
+                  <span>&nbsp;<ng-container i18n>Outgoing Disposition</ng-container></span>
+                </a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-item app-link" [class.expanded]="isMenuExpanded('approval')">
+            <a class="nav-link" (click)="toggleMenu('approval')"
+              ngbPopover="Approval" i18n-ngbPopover [disablePopover]="!slimSidebarEnabled" placement="end"
+              container="body" triggers="mouseenter:mouseleave" popoverClass="popover-slim">
+              <i-bs class="me-1" name="check"></i-bs><span>&nbsp;<ng-container i18n>Approval</ng-container></span>
+            </a>
+            <ul class="nav flex-column submenu">
+              <li class="nav-item">
+                <a class="nav-link" routerLink="approval/in" routerLinkActive="active" (click)="closeMenu()">
+                  <span>&nbsp;<ng-container i18n>Incoming Approval</ng-container></span>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" routerLink="approval/out" routerLinkActive="active" (click)="closeMenu()">
+                  <span>&nbsp;<ng-container i18n>Outgoing Approval</ng-container></span>
+                </a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-item app-link">
+            <a class="nav-link" routerLink="draft" routerLinkActive="active" (click)="closeMenu()"
+              ngbPopover="Draft" i18n-ngbPopover [disablePopover]="!slimSidebarEnabled" placement="end"
+              container="body" triggers="mouseenter:mouseleave" popoverClass="popover-slim">
+              <i-bs class="me-1" name="ladder"></i-bs><span>&nbsp;<ng-container i18n>Draft</ng-container></span>
+            </a>
+            <ul class="nav flex-column submenu">
+              <li class="nav-item">
+                <a class="nav-link" routerLink="draft/inprogress" routerLinkActive="active" (click)="closeMenu()">
+                  <span>&nbsp;<ng-container i18n>Inprogress Draft</ng-container></span>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" routerLink="draft/rejected" routerLinkActive="active" (click)="closeMenu()">
+                  <span>&nbsp;<ng-container i18n>Rejected Draft</ng-container></span>
+                </a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-item app-link">
+            <a class="nav-link" routerLink="memo" routerLinkActive="active" (click)="closeMenu()"
+              ngbPopover="Memo" i18n-ngbPopover [disablePopover]="!slimSidebarEnabled" placement="end"
+              container="body" triggers="mouseenter:mouseleave" popoverClass="popover-slim">
+              <i-bs class="me-1" name="sticky-note"></i-bs><span>&nbsp;<ng-container i18n>Memo</ng-container></span>
+            </a>
+            <ul class="nav flex-column submenu">
+              <li class="nav-item">
+                <a class="nav-link" routerLink="memo/internal" routerLinkActive="active" (click)="closeMenu()">
+                  <span>&nbsp;<ng-container i18n>Internal Memo</ng-container></span>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" routerLink="memo/external" routerLinkActive="active" (click)="closeMenu()">
+                  <span>&nbsp;<ng-container i18n>External Memo</ng-container></span>
+                </a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-item app-link">
+            <a class="nav-link" routerLink="compose" routerLinkActive="active" (click)="closeMenu()"
+              ngbPopover="Compose" i18n-ngbPopover [disablePopover]="!slimSidebarEnabled" placement="end"
+              container="body" triggers="mouseenter:mouseleave" popoverClass="popover-slim">
+              <i-bs class="me-1" name="pencil"></i-bs><span>&nbsp;<ng-container i18n>Compose</ng-container></span>
             </a>
           </li>
         </ul>

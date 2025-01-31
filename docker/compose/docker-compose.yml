@@ -34,6 +34,8 @@ services:
   broker:
     image: docker.io/library/redis:7
     restart: unless-stopped
+    ports:
+      - "6379:6379"  # Exposing the default Redis port
     volumes:
       - redisdata:/data
 

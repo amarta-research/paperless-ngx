@@ -290,6 +290,41 @@ class Document(SoftDeleteModel, ModelWithOwner):
         ),
     )
 
+    sla_processing_deadline = models.DateTimeField(
+        _("SLA processing deadline"),
+        blank=True,
+        null=True,
+        help_text=_("The deadline for processing this document"),
+    )
+
+    sla_responsible_user = models.ForeignKey(
+        User,
+        blank=True,
+        null=True,
+        on_delete=models.SET_NULL,
+        related_name="sla_documents",
+        verbose_name=_("SLA responsible user"),
+    )
+
+    sla_status = models.CharField(
+        _("SLA status"),
+        max_length=20,
+        choices=[
+            ('on_track', _('On Track')),
+            ('approaching_deadline', _('Approaching Deadline')),
+            ('overdue', _('Overdue')),
+        ],
+        blank=True,
+        null=True,
+    )
+
+    sla_processing_days = models.PositiveIntegerField(
+        _("SLA processing days"),
+        blank=True,
+        null=True,
+        help_text=_("Number of days allowed for processing this document"),
+    )
+
     class Meta:
         ordering = ("-created",)
         verbose_name = _("document")
