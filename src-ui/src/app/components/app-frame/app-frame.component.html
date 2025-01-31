@@ -83,6 +83,13 @@
               <i-bs class="me-1" name="house"></i-bs><span>&nbsp;<ng-container i18n>Dashboard</ng-container></span>
             </a>
           </li>
+          <li class="nav-item app-link">
+            <a class="nav-link" routerLink="document-chat" routerLinkActive="active" (click)="closeMenu()"
+              ngbPopover="Ask AI" i18n-ngbPopover [disablePopover]="!slimSidebarEnabled" placement="end"
+              container="body" triggers="mouseenter:mouseleave" popoverClass="popover-slim">
+              <i-bs name="files" class="me-1"></i-bs><span>&nbsp;<ng-container i18n>Ask AI [Beta]</ng-container></span>
+            </a>
+          </li>
           <li class="nav-item app-link" *pngxIfPermissions="{ action: PermissionAction.View, type: PermissionType.Document }">
             <a class="nav-link" routerLink="documents" routerLinkActive="active" (click)="closeMenu()"
               ngbPopover="Documents" i18n-ngbPopover [disablePopover]="!slimSidebarEnabled" placement="end"
@@ -113,7 +120,7 @@
             <a class="nav-link" (click)="toggleMenu('approval')"
               ngbPopover="Approval" i18n-ngbPopover [disablePopover]="!slimSidebarEnabled" placement="end"
               container="body" triggers="mouseenter:mouseleave" popoverClass="popover-slim">
-              <i-bs class="me-1" name="check"></i-bs><span>&nbsp;<ng-container i18n>Approval</ng-container></span>
+              <i-bs class="me-1" name="file-text"></i-bs><span>&nbsp;<ng-container i18n>Approval</ng-container></span>
             </a>
             <ul class="nav flex-column submenu">
               <li class="nav-item">
@@ -132,7 +139,7 @@
             <a class="nav-link" routerLink="draft" routerLinkActive="active" (click)="closeMenu()"
               ngbPopover="Draft" i18n-ngbPopover [disablePopover]="!slimSidebarEnabled" placement="end"
               container="body" triggers="mouseenter:mouseleave" popoverClass="popover-slim">
-              <i-bs class="me-1" name="ladder"></i-bs><span>&nbsp;<ng-container i18n>Draft</ng-container></span>
+              <i-bs class="me-1" name="file-text"></i-bs><span>&nbsp;<ng-container i18n>Draft</ng-container></span>
             </a>
             <ul class="nav flex-column submenu">
               <li class="nav-item">
@@ -151,7 +158,7 @@
             <a class="nav-link" routerLink="memo" routerLinkActive="active" (click)="closeMenu()"
               ngbPopover="Memo" i18n-ngbPopover [disablePopover]="!slimSidebarEnabled" placement="end"
               container="body" triggers="mouseenter:mouseleave" popoverClass="popover-slim">
-              <i-bs class="me-1" name="sticky-note"></i-bs><span>&nbsp;<ng-container i18n>Memo</ng-container></span>
+              <i-bs class="me-1" name="file-text"></i-bs><span>&nbsp;<ng-container i18n>Memo</ng-container></span>
             </a>
             <ul class="nav flex-column submenu">
               <li class="nav-item">
@@ -166,13 +173,13 @@
               </li>
             </ul>
           </li>
-          <li class="nav-item app-link">
+          <!-- <li class="nav-item app-link">
             <a class="nav-link" routerLink="compose" routerLinkActive="active" (click)="closeMenu()"
               ngbPopover="Compose" i18n-ngbPopover [disablePopover]="!slimSidebarEnabled" placement="end"
               container="body" triggers="mouseenter:mouseleave" popoverClass="popover-slim">
               <i-bs class="me-1" name="pencil"></i-bs><span>&nbsp;<ng-container i18n>Compose</ng-container></span>
             </a>
-          </li>
+          </li> -->
         </ul>
 
         <div class="nav-group mt-3 mb-1" *pngxIfPermissions="{ action: PermissionAction.View, type: PermissionType.SavedView }">
