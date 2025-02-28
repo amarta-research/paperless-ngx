@@ -47,7 +47,7 @@ RUN set -eux \
 # Purpose: The final image
 # Comments:
 #  - Don't leave anything extra in here
-FROM docker.io/python:3.12-slim-bookworm AS main-app
+FROM docker.io/python:3.12-bookworm AS main-app
 
 LABEL org.opencontainers.image.authors="paperless-ngx team <hello@paperless-ngx.com>"
 LABEL org.opencontainers.image.documentation="https://docs.paperless-ngx.com/"
@@ -228,6 +228,9 @@ ARG BUILD_PACKAGES="\
 RUN --mount=type=cache,target=/root/.cache/pip/,id=pip-cache \
   set -eux \
   && echo "Installing build system packages" \
+    && apt-get update -y || true \
+    && apt-get install -y --no-install-recommends gnupg ca-certificates \
+    && apt-key update \
     && apt-get update \
     && apt-get install --yes --quiet --no-install-recommends ${BUILD_PACKAGES} \
     && python3 -m pip install --no-cache-dir --upgrade wheel \
