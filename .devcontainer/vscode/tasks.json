@@ -208,6 +208,9 @@
 				"Maintenance: manage.py migrate",
 				"Maintenance: manage.py createsuperuser",
 				"Maintenance: Compile frontend for production"
+			],
+			"problemMatcher": [
+				"$eslint-compact"
 			]
 		},
 		{
